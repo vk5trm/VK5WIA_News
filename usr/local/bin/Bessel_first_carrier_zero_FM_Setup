@@ -1,0 +1,7 @@
+#!/bin/bash
+# Read in the WIA News specific settings.
+. /usr/local/etc/WIANews.conf
+# -------------------------------------------------------------------------------
+/usr/local/bin/setSerialSignal /dev/$port 0 0
+/bin/sleep 1
+/usr/bin/play /home/WIAnews/fmcal.wav && /usr/local/bin/setSerialSignal /dev/$port 1 1

@@ -1,0 +1,15 @@
+#!/bin/bash
+# Comm Port to use for PTT
+port=ttyUSB0
+
+# -------------------------------------------------------------------------------
+/usr/local/bin/setSerialSignal /dev/$port 0 0
+/bin/sleep 3
+/usr/bin/play /home/WIAnews/Broadcast_Warning.wav && /usr/local/bin/setSerialSignal /dev/$port 1 1
+/bin/sleep 300
+/usr/local/bin/setSerialSignal /dev/$port 0 0
+/bin/sleep 3
+/usr/bin/play /home/WIAnews/WIAnews.mp3 && /usr/local/bin/setSerialSignal /dev/$port 1 1
+if [ $? -ne 0 ]; then
+exit
+ fi

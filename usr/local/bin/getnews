@@ -1,0 +1,28 @@
+#!/bin/bash
+cd /tmp
+if [ -f news.wav ] ; then
+ rm news.wav
+ fi
+if [ -f wianews_64.mp3 ] ; then
+ rm wianews_64.mp3
+ fi
+ if [ -f local.mp3 ] ; then
+ rm local.mp3
+ fi
+ if [ -f local.wav ] ; then
+ rm local.wav
+ fi
+/usr/bin/wget http://www.wiaq.org.au/ftp/wianews_64.mp3 >>/tmp/WIAnews.log
+ if [ $? -ne 0 ]; then 
+ exit
+ fi
+  /usr/bin/sox wianews_64.mp3 -r 44100 -c 1 news.wav compand 0.3,1 6:-70,-60,-20 -12 -90 0.2 
+  /usr/bin/wget http://northeastradioclub.org.au/broadcast/local.mp3 >>/tmp/WIAnews.log
+  if [ $? -ne 0 ]
+then
+      /usr/bin/sox /home/WIAnews/preamble.wav news.wav /home/WIAnews/Postamble.wav -C 64.5 /home/WIAnews/WIAnews.mp3
+else 
+      /usr/bin/sox local.mp3 -r 44100 -c 1 local.wav compand 0.3,1 6:-70,-60,-20 -12 -90 0.2
+     /usr/bin/sox /home/WIAnews/preamble.wav news.wav local.wav /home/WIAnews/Postamble.wav -C 64.5 /home/WIAnews/WIAnews.mp3
+fi
+exit
